@@ -30,6 +30,7 @@ let board = document.querySelector('.board');
 let winnerText = document.querySelector('.winner-text');
 let inGameWinner = document.querySelector('#in-game-winner');
 let gameButtonWrapper = document.querySelector('.game-button-wrapper');
+let currentRoundOver = false;
 
 startGameButton.addEventListener('click', () => {
   player1.name = player1NameInput.value;
@@ -44,12 +45,14 @@ startGameButton.addEventListener('click', () => {
 });
 
 function winnerDisplay() {
+  currentRoundOver = true;
   inGameWinner.style.display = 'block';
   winnerText.style.display = 'block';
   gameButtonWrapper.style.display = 'block';
 }
 
 function catDisplay() {
+  currentRoundOver = true;
   inGameWinner.style.display = 'block';
   winnerText.style.display = 'block';
   gameButtonWrapper.style.display = 'block';
@@ -111,17 +114,19 @@ function createBoardCell(id, gameBoardLocation) {
   let element = document.createElement('div');
   element.setAttribute('id', id);
   element.addEventListener('click', () => {
-    if (clickCount % 2 === 0 && element.textContent === '') {
-      element.textContent = 'O';
-      gameBoard[gameBoardLocation] = 'O';
-      clickCount++;
-    } else if (clickCount % 2 !== 0 && element.textContent === '') {
-      element.textContent = 'X';
-      gameBoard[gameBoardLocation] = 'X';
-      clickCount++;
-    }
-    if (!gameBoard.includes(' ')) {
-      catDisplay();
+    if (!currentRoundOver) {
+      if (clickCount % 2 === 0 && element.textContent === '') {
+        element.textContent = 'O';
+        gameBoard[gameBoardLocation] = 'O';
+        clickCount++;
+      } else if (clickCount % 2 !== 0 && element.textContent === '') {
+        element.textContent = 'X';
+        gameBoard[gameBoardLocation] = 'X';
+        clickCount++;
+      }
+      if (!gameBoard.includes(' ')) {
+        catDisplay();
+      }
     }
 
     console.log(gameBoard);
