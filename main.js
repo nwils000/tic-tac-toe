@@ -26,6 +26,7 @@ let playerNameSubmissionError = document.getElementById(
 );
 let gamePageWrapper = document.getElementById('game-page-wrapper');
 let mainWrapper = document.getElementById('main-wrapper');
+let board = document.querySelector('.board');
 
 gamePageWrapper.style.display = 'none';
 
@@ -40,6 +41,16 @@ startGameButton.addEventListener('click', () => {
     playerNameSubmissionError.textContent = 'Please submit 2 names.';
   }
 });
+
+function createBoardCell(id) {
+  let element = document.createElement('div');
+  element.setAttribute('id', id);
+  board.appendChild(element);
+}
+
+for (let i = 1; i <= 9; i++) {
+  createBoardCell(`cell ${i}`);
+}
 
 /*
   Data/State Section
