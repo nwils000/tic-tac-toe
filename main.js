@@ -14,7 +14,7 @@ let player2 = {
 
 let currentPlayer = player1;
 
-let gameBoard = ['', '', '', '', '', '', '', '', ''];
+let gameBoard = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '];
 
 let clickCount = 0;
 
@@ -27,8 +27,9 @@ let playerNameSubmissionError = document.getElementById(
 let gamePageWrapper = document.getElementById('game-page-wrapper');
 let mainWrapper = document.getElementById('main-wrapper');
 let board = document.querySelector('.board');
-
-gamePageWrapper.style.display = 'none';
+let winnerText = document.querySelector('.winner-text');
+let inGameWinner = document.querySelector('#in-game-winner');
+let gameButtonWrapper = document.querySelector('.game-button-wrapper');
 
 startGameButton.addEventListener('click', () => {
   player1.name = player1NameInput.value;
@@ -42,14 +43,95 @@ startGameButton.addEventListener('click', () => {
   }
 });
 
-function createBoardCell(id) {
+function winnerDisplay() {
+  inGameWinner.style.display = 'block';
+  winnerText.style.display = 'block';
+  gameButtonWrapper.style.display = 'block';
+}
+
+function catDisplay() {
+  inGameWinner.style.display = 'block';
+  winnerText.style.display = 'block';
+  gameButtonWrapper.style.display = 'block';
+  winnerText.textContent = 'CAT!';
+}
+
+function winningConditions(board) {
+  if (
+    (board[0] === 'X' && board[1] === 'X' && board[2] === 'X') ||
+    (board[0] === 'O' && board[1] === 'O' && board[2] === 'O')
+  ) {
+    winnerDisplay();
+  }
+  if (
+    (board[3] === 'X' && board[4] === 'X' && board[5] === 'X') ||
+    (board[3] === 'O' && board[4] === 'O' && board[5] === 'O')
+  ) {
+    winnerDisplay();
+  }
+  if (
+    (board[6] === 'X' && board[7] === 'X' && board[8] === 'X') ||
+    (board[6] === 'O' && board[7] === 'O' && board[8] === 'O')
+  ) {
+    winnerDisplay();
+  }
+  if (
+    (board[0] === 'X' && board[3] === 'X' && board[6] === 'X') ||
+    (board[0] === 'O' && board[3] === 'O' && board[6] === 'O')
+  ) {
+    winnerDisplay();
+  }
+  if (
+    (board[1] === 'X' && board[4] === 'X' && board[7] === 'X') ||
+    (board[1] === 'O' && board[4] === 'O' && board[7] === 'O')
+  ) {
+    winnerDisplay();
+  }
+  if (
+    (board[2] === 'X' && board[5] === 'X' && board[8] === 'X') ||
+    (board[2] === 'O' && board[5] === 'O' && board[8] === 'O')
+  ) {
+    winnerDisplay();
+  }
+  if (
+    (board[0] === 'X' && board[4] === 'X' && board[8] === 'X') ||
+    (board[0] === 'O' && board[4] === 'O' && board[8] === 'O')
+  ) {
+    winnerDisplay();
+  }
+  if (
+    (board[2] === 'X' && board[4] === 'X' && board[6] === 'X') ||
+    (board[2] === 'O' && board[4] === 'O' && board[6] === 'O')
+  ) {
+    winnerDisplay();
+  }
+}
+
+function createBoardCell(id, gameBoardLocation) {
   let element = document.createElement('div');
   element.setAttribute('id', id);
+  element.addEventListener('click', () => {
+    if (clickCount % 2 === 0 && element.textContent === '') {
+      element.textContent = 'O';
+      gameBoard[gameBoardLocation] = 'O';
+      clickCount++;
+    } else if (clickCount % 2 !== 0 && element.textContent === '') {
+      element.textContent = 'X';
+      gameBoard[gameBoardLocation] = 'X';
+      clickCount++;
+    }
+    if (!gameBoard.includes(' ')) {
+      catDisplay();
+    }
+
+    console.log(gameBoard);
+    winningConditions(gameBoard);
+  });
   board.appendChild(element);
 }
 
-for (let i = 1; i <= 9; i++) {
-  createBoardCell(`cell ${i}`);
+for (let i = 0; i < 9; i++) {
+  createBoardCell(`cell ${i}`, i);
 }
 
 /*
@@ -81,7 +163,7 @@ for (let i = 1; i <= 9; i++) {
     shuffleNames: Randomly determine which player goes first.
     updateBoard(index): Update the game board based on player interaction; place "X" or "O" depending on the click count.
     checkWin: Check the current state of the board against possible winning conditions.
-    displayWinner: Display the winner and update the game UI to show game over options.
+    displayWinner: Display the winner and update the game UI to show game over options. 
     resetGame: Clear the game state and prepare for a new game or round.
 */
 
