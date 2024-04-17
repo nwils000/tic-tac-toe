@@ -1,13 +1,15 @@
 let player1 = {
-  name: player1Name,
+  name: '',
   symbol: '',
   score: 0,
+  choices: [],
 };
 
 let player2 = {
-  name: player2Name,
+  name: '',
   symbol: '',
   score: 0,
+  choices: [],
 };
 
 let currentPlayer = player1;
@@ -15,6 +17,22 @@ let currentPlayer = player1;
 let gameBoard = ['', '', '', '', '', '', '', '', ''];
 
 let clickCount = 0;
+
+let player1NameInput = document.getElementById('player1-name-input');
+let player2NameInput = document.getElementById('player2-name-input');
+let playerNamesSubmit = document.getElementById('player-names-submit');
+let startGameButton = document.getElementById('start-game-button');
+
+playerNamesSubmit.addEventListener('click', () => {
+  player1.name = player1NameInput.value;
+  player2.name = player2NameInput.value;
+  player1NameInput.value = '';
+  player2NameInput.value = '';
+});
+
+startGameButton.addEventListener('click', () => {
+  window.location.href = '/game-pages/game.html';
+});
 
 /*
   Data/State Section
@@ -53,6 +71,7 @@ let clickCount = 0;
   Event Listeners
     Click Events for Game Cells: Detect clicks on game board cells, update the board, and toggle player turns.
     New Round/Game Buttons: Handle game progression controls, including starting new rounds and concluding the current game session.
+    Submit Names Button: Save the current value of both name input fields into their respective user object.
 */
 
 /*
