@@ -20,18 +20,25 @@ let clickCount = 0;
 
 let player1NameInput = document.getElementById('player1-name-input');
 let player2NameInput = document.getElementById('player2-name-input');
-let playerNamesSubmit = document.getElementById('player-names-submit');
 let startGameButton = document.getElementById('start-game-button');
+let playerNameSubmissionError = document.getElementById(
+  'player-name-submission-error'
+);
+let gamePageWrapper = document.getElementById('game-page-wrapper');
+let mainWrapper = document.getElementById('main-wrapper');
 
-playerNamesSubmit.addEventListener('click', () => {
-  player1.name = player1NameInput.value;
-  player2.name = player2NameInput.value;
-  player1NameInput.value = '';
-  player2NameInput.value = '';
-});
+gamePageWrapper.style.display = 'none';
 
 startGameButton.addEventListener('click', () => {
-  window.location.href = '/game-pages/game.html';
+  player1.name = player1NameInput.value;
+  player2.name = player2NameInput.value;
+  if (player1.name !== '' && player2.name !== '') {
+    console.log('User objects on game start: '.player1, player2);
+    mainWrapper.style.display = 'none';
+    gamePageWrapper.style.display = 'block';
+  } else {
+    playerNameSubmissionError.textContent = 'Please submit 2 names.';
+  }
 });
 
 /*
