@@ -26,21 +26,10 @@
   align-items: center;
 }
 
-#game-page-wrapper {
-  display: none;
-}
-
-#in-game-winner,
-#shuffling-names,
-.winner-text,
-.game-button-wrapper {
-  display: none;
-}
-
 .game-header {
   display: flex;
   justify-content: space-between;
-
+  padding: 1rem 10vw;
   align-items: top;
 }
 
@@ -57,6 +46,43 @@
 
 .player1-side,
 .player2-side {
-  width: 20%;
-  text-align: center;
+  width: 30%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
+
+#game-page-wrapper,
+#draggableX-player1,
+#draggableO-player1,
+#draggableX-player2,
+#draggableO-player2,
+#shuffling-names,
+#finished-game {
+  display: none;
+}
+
+#in-game-winner,
+.winner-text,
+.game-button-wrapper {
+  visibility: hidden;
+}
+
+.name-input-form-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+#main-wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+  height: 50vh;
+  padding-top: 5rem;
+  align-items: center;
+  justify-content: center;
+}
+
+#finishedGames

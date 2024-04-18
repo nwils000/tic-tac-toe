@@ -2,14 +2,12 @@ let player1 = {
   name: '',
   symbol: '',
   score: 0,
-  choices: [],
 };
 
 let player2 = {
   name: '',
   symbol: '',
   score: 0,
-  choices: [],
 };
 
 let currentPlayer = player1;
@@ -43,6 +41,15 @@ let player2ScoreNameDisplay = document.getElementById(
 );
 let player1Score = document.getElementById('player1-score');
 let player2Score = document.getElementById('player2-score');
+let playerWhoOne = document.getElementById('player-who-won-name');
+let scoreVsScore = document.getElementById('score-vs-score');
+let finishedGame = document.getElementById('finished-game');
+let newGameButton = document.getElementById('new-game-button');
+let winOrDraw = document.getElementById('win-or-draw');
+let XPlayer1 = document.getElementById('draggableX-player1');
+let OPlayer1 = document.getElementById('draggableO-player1');
+let XPlayer2 = document.getElementById('draggableX-player2');
+let OPlayer2 = document.getElementById('draggableO-player2');
 
 let currentRoundOver = false;
 
@@ -58,7 +65,13 @@ startGameButton.addEventListener('click', () => {
   player2Score.textContent = player2.score;
   if (player1.name !== '' && player2.name !== '') {
     shufflePlayers();
-    console.log('User objects on game start: '.player1, player2);
+    player1.symbol === 'X'
+      ? (XPlayer1.style.display = 'block')
+      : (OPlayer1.style.display = 'block');
+    player2.symbol === 'X'
+      ? (XPlayer2.style.display = 'block')
+      : (OPlayer2.style.display = 'block');
+    console.log('User Objects', player1, player2);
     mainWrapper.style.display = 'none';
     shufflingNames.style.display = 'block';
     setTimeout(showGame, 1000);
@@ -70,6 +83,36 @@ startGameButton.addEventListener('click', () => {
 function showGame() {
   shufflingNames.style.display = 'none';
   gamePageWrapper.style.display = 'block';
+}
+
+newGameButton.addEventListener('click', () => {
+  newGame();
+});
+
+function newGame() {
+  finishedGame.style.display = 'none';
+  mainWrapper.style.display = 'block';
+  newRound();
+  player1.score = 0;
+  player2.score = 0;
+}
+
+finishGameButton.addEventListener('click', () => {
+  finishGame();
+});
+
+function finishGame() {
+  let winner = player1.score > player2.score ? player1 : player2;
+  let loser = player1.score < player2.score ? player1 : player2;
+  if (winner.score === loser.score) {
+    winOrDraw.textContent = 'You both lose!!!';
+    scoreVsScore.textContent = `Score was tied ${winner.score} and ${loser.score}`;
+  } else if (winner.score !== loser.score) {
+    winOrDraw.textContent = `${winner.name} is the winner!!!`;
+    scoreVsScore.textContent = `you won ${winner.score} to ${loser.score}`;
+  }
+  gamePageWrapper.style.display = 'none';
+  finishedGame.style.display = 'block';
 }
 
 function shufflePlayers() {
@@ -88,21 +131,22 @@ function winnerDisplay(winner) {
   } else if (player2.symbol === winner) {
     player2.score++;
   }
-  console.log(player1, player2);
-  currentRoundOver = true;
-  inGameWinner.style.display = 'block';
-  winnerText.style.display = 'block';
-  gameButtonWrapper.style.display = 'block';
+  winnerText.textContent = 'WINNER!';
+  inGameWinner.style.visibility = 'visible';
+  winnerText.style.visibility = 'visible';
+  gameButtonWrapper.style.visibility = 'visible';
   player1Score.textContent = player1.score;
   player2Score.textContent = player2.score;
+  currentRoundOver = true;
 }
 
 function catDisplay() {
+  if (currentRoundOver) return;
   if (winningConditions(gameBoard) !== 'won') {
     currentRoundOver = true;
-    inGameWinner.style.display = 'block';
-    winnerText.style.display = 'block';
-    gameButtonWrapper.style.display = 'block';
+    inGameWinner.style.visibility = 'visible';
+    winnerText.style.visibility = 'visible';
+    gameButtonWrapper.style.visibility = 'visible';
     winnerText.textContent = 'CAT!';
     player1Score.textContent = player1.score;
     player2Score.textContent = player2.score;
@@ -110,6 +154,7 @@ function catDisplay() {
 }
 
 function winningConditions(board) {
+  if (currentRoundOver) return;
   if (
     (board[0] === 'X' && board[1] === 'X' && board[2] === 'X') ||
     (board[3] === 'X' && board[4] === 'X' && board[5] === 'X') ||
@@ -142,23 +187,22 @@ function createBoardCell(id, gameBoardLocation) {
   let element = document.createElement('div');
   element.setAttribute('id', id);
   element.addEventListener('click', () => {
-    if (!currentRoundOver) {
-      if (clickCount % 2 === 0 && element.textContent === '') {
-        element.textContent = 'O';
-        gameBoard[gameBoardLocation] = 'O';
-        clickCount++;
-      } else if (clickCount % 2 !== 0 && element.textContent === '') {
-        element.textContent = 'X';
-        gameBoard[gameBoardLocation] = 'X';
-        clickCount++;
-      }
-      if (!gameBoard.includes(' ')) {
-        catDisplay();
-      }
-    }
+    if (currentRoundOver) return;
 
-    console.log(gameBoard);
-    winningConditions(gameBoard);
+    if (clickCount % 2 === 0 && element.textContent === '') {
+      element.textContent = 'O';
+      gameBoard[gameBoardLocation] = 'O';
+      clickCount++;
+      winningConditions(gameBoard);
+    } else if (clickCount % 2 !== 0 && element.textContent === '') {
+      element.textContent = 'X';
+      gameBoard[gameBoardLocation] = 'X';
+      clickCount++;
+      winningConditions(gameBoard);
+    }
+    if (!gameBoard.includes(' ')) {
+      catDisplay();
+    }
   });
   board.appendChild(element);
 }
@@ -180,10 +224,14 @@ function newRound() {
   winnerText.textContent = 'WINNER!';
   gameBoard = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '];
   currentRoundOver = false;
-  inGameWinner.style.display = 'none';
-  winnerText.style.display = 'none';
-  gameButtonWrapper.style.display = 'none';
+  inGameWinner.style.visibility = 'hidden';
+  winnerText.style.visibility = 'hidden';
+  gameButtonWrapper.style.visibility = 'hidden';
 }
+
+// BUGS
+
+// DOUBLE WIN AND IF TIED WHEN THEY FINISH GAME
 
 /*
   Data/State Section

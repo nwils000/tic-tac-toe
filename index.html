@@ -30,11 +30,50 @@
 
     <div id="shuffling-names">Shuffling names...</div>
 
+    <div id="finished-game">
+      <h2 id="win-or-draw"></h2>
+      <p id="player-who-won-name"></p>
+      <p id="score-vs-score"></p>
+      <button id="new-game-button">New Game</button>
+    </div>
+
     <div id="game-page-wrapper">
       <header class="game-header">
         <div class="player1-side">
           <h2 id="player1-in-game-name"></h2>
-          <img id="player1-in-game-image" />
+          <svg
+            id="draggableX-player1"
+            width="100"
+            height="100"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M18 6L6 18"
+              stroke="black"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <path
+              d="M6 6L18 18"
+              stroke="black"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+          <svg
+            id="draggableO-player1"
+            width="100"
+            height="100"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <circle cx="12" cy="12" r="9" stroke="black" stroke-width="2" />
+          </svg>
         </div>
         <div>
           <h1>Total Score</h1>
@@ -51,7 +90,39 @@
         </div>
         <div class="player2-side">
           <h2 id="player2-in-game-name"></h2>
-          <img id="player2-in-game-image" />
+          <svg
+            id="draggableX-player2"
+            width="100"
+            height="100"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M18 6L6 18"
+              stroke="black"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <path
+              d="M6 6L18 18"
+              stroke="black"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+          <svg
+            id="draggableO-player2"
+            width="100"
+            height="100"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <circle cx="12" cy="12" r="9" stroke="black" stroke-width="2" />
+          </svg>
         </div>
       </header>
       <main class="game-main">
