@@ -16,7 +16,7 @@ let currentPlayer = player1;
 
 let gameBoard = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '];
 
-let clickCount = 0;
+let clickCount = 1;
 
 let player1NameInput = document.getElementById('player1-name-input');
 let player2NameInput = document.getElementById('player2-name-input');
@@ -30,83 +30,111 @@ let board = document.querySelector('.board');
 let winnerText = document.querySelector('.winner-text');
 let inGameWinner = document.querySelector('#in-game-winner');
 let gameButtonWrapper = document.querySelector('.game-button-wrapper');
+let newRoundButton = document.getElementById('new-round-button');
+let finishGameButton = document.getElementById('finish-game-button');
+let shufflingNames = document.getElementById('shuffling-names');
+let player1NameDisplay = document.getElementById('player1-in-game-name');
+let player2NameDisplay = document.getElementById('player2-in-game-name');
+let player1ScoreNameDisplay = document.getElementById(
+  'player1-score-in-game-name'
+);
+let player2ScoreNameDisplay = document.getElementById(
+  'player2-score-in-game-name'
+);
+let player1Score = document.getElementById('player1-score');
+let player2Score = document.getElementById('player2-score');
+
 let currentRoundOver = false;
 
 startGameButton.addEventListener('click', () => {
   player1.name = player1NameInput.value;
   player2.name = player2NameInput.value;
+  player1NameDisplay.textContent = player1.name;
+  player2NameDisplay.textContent = player2.name;
+  player1ScoreNameDisplay.textContent = player1.name;
+  player2ScoreNameDisplay.textContent = player2.name;
+
+  player1Score.textContent = player1.score;
+  player2Score.textContent = player2.score;
   if (player1.name !== '' && player2.name !== '') {
+    shufflePlayers();
     console.log('User objects on game start: '.player1, player2);
     mainWrapper.style.display = 'none';
-    gamePageWrapper.style.display = 'block';
+    shufflingNames.style.display = 'block';
+    setTimeout(showGame, 1000);
   } else {
     playerNameSubmissionError.textContent = 'Please submit 2 names.';
   }
 });
 
-function winnerDisplay() {
+function showGame() {
+  shufflingNames.style.display = 'none';
+  gamePageWrapper.style.display = 'block';
+}
+
+function shufflePlayers() {
+  if (Math.random() < 0.5) {
+    player1.symbol = 'X';
+    player2.symbol = 'O';
+  } else {
+    player1.symbol = 'O';
+    player2.symbol = 'X';
+  }
+}
+
+function winnerDisplay(winner) {
+  if (player1.symbol === winner) {
+    player1.score++;
+  } else if (player2.symbol === winner) {
+    player2.score++;
+  }
+  console.log(player1, player2);
   currentRoundOver = true;
   inGameWinner.style.display = 'block';
   winnerText.style.display = 'block';
   gameButtonWrapper.style.display = 'block';
+  player1Score.textContent = player1.score;
+  player2Score.textContent = player2.score;
 }
 
 function catDisplay() {
-  currentRoundOver = true;
-  inGameWinner.style.display = 'block';
-  winnerText.style.display = 'block';
-  gameButtonWrapper.style.display = 'block';
-  winnerText.textContent = 'CAT!';
+  if (winningConditions(gameBoard) !== 'won') {
+    currentRoundOver = true;
+    inGameWinner.style.display = 'block';
+    winnerText.style.display = 'block';
+    gameButtonWrapper.style.display = 'block';
+    winnerText.textContent = 'CAT!';
+    player1Score.textContent = player1.score;
+    player2Score.textContent = player2.score;
+  }
 }
 
 function winningConditions(board) {
   if (
     (board[0] === 'X' && board[1] === 'X' && board[2] === 'X') ||
-    (board[0] === 'O' && board[1] === 'O' && board[2] === 'O')
-  ) {
-    winnerDisplay();
-  }
-  if (
     (board[3] === 'X' && board[4] === 'X' && board[5] === 'X') ||
-    (board[3] === 'O' && board[4] === 'O' && board[5] === 'O')
-  ) {
-    winnerDisplay();
-  }
-  if (
     (board[6] === 'X' && board[7] === 'X' && board[8] === 'X') ||
-    (board[6] === 'O' && board[7] === 'O' && board[8] === 'O')
-  ) {
-    winnerDisplay();
-  }
-  if (
     (board[0] === 'X' && board[3] === 'X' && board[6] === 'X') ||
-    (board[0] === 'O' && board[3] === 'O' && board[6] === 'O')
-  ) {
-    winnerDisplay();
-  }
-  if (
     (board[1] === 'X' && board[4] === 'X' && board[7] === 'X') ||
-    (board[1] === 'O' && board[4] === 'O' && board[7] === 'O')
-  ) {
-    winnerDisplay();
-  }
-  if (
     (board[2] === 'X' && board[5] === 'X' && board[8] === 'X') ||
-    (board[2] === 'O' && board[5] === 'O' && board[8] === 'O')
-  ) {
-    winnerDisplay();
-  }
-  if (
     (board[0] === 'X' && board[4] === 'X' && board[8] === 'X') ||
-    (board[0] === 'O' && board[4] === 'O' && board[8] === 'O')
+    (board[2] === 'X' && board[4] === 'X' && board[6] === 'X')
   ) {
-    winnerDisplay();
+    winnerDisplay('X');
+    return 'won';
   }
   if (
-    (board[2] === 'X' && board[4] === 'X' && board[6] === 'X') ||
+    (board[0] === 'O' && board[1] === 'O' && board[2] === 'O') ||
+    (board[3] === 'O' && board[4] === 'O' && board[5] === 'O') ||
+    (board[6] === 'O' && board[7] === 'O' && board[8] === 'O') ||
+    (board[0] === 'O' && board[3] === 'O' && board[6] === 'O') ||
+    (board[1] === 'O' && board[4] === 'O' && board[7] === 'O') ||
+    (board[2] === 'O' && board[5] === 'O' && board[8] === 'O') ||
+    (board[0] === 'O' && board[4] === 'O' && board[8] === 'O') ||
     (board[2] === 'O' && board[4] === 'O' && board[6] === 'O')
   ) {
-    winnerDisplay();
+    winnerDisplay('O');
+    return 'won';
   }
 }
 
@@ -137,6 +165,24 @@ function createBoardCell(id, gameBoardLocation) {
 
 for (let i = 0; i < 9; i++) {
   createBoardCell(`cell ${i}`, i);
+}
+
+newRoundButton.addEventListener('click', () => {
+  newRound();
+});
+
+function newRound() {
+  clickCount = 1;
+  for (let i = 0; i < 9; i++) {
+    let element = document.getElementById(`cell ${i}`);
+    element.textContent = '';
+  }
+  winnerText.textContent = 'WINNER!';
+  gameBoard = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '];
+  currentRoundOver = false;
+  inGameWinner.style.display = 'none';
+  winnerText.style.display = 'none';
+  gameButtonWrapper.style.display = 'none';
 }
 
 /*

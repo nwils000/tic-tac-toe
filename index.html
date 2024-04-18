@@ -5,45 +5,64 @@
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Tic-Tac-Toe</title>
-    <link rel="stylesheet" href="./styles/styles.css">
+    <link rel="stylesheet" href="./styles/styles.css" />
   </head>
   <body>
     <div id="main-wrapper">
       <h1>Tic-Tac-Toe</h1>
       <div class="name-input-form-wrapper">
-        <input type="text" id="player1-name-input" placeholder="Player1" />
-        <input type="text" id="player2-name-input" placeholder="Player2" />
+        <input
+          type="text"
+          maxlength="10"
+          id="player1-name-input"
+          placeholder="Player1"
+        />
+        <input
+          type="text"
+          maxlength="10"
+          id="player2-name-input"
+          placeholder="Player2"
+        />
       </div>
       <p id="player-name-submission-error"></p>
       <button id="start-game-button">Start Game!</button>
     </div>
 
+    <div id="shuffling-names">Shuffling names...</div>
+
     <div id="game-page-wrapper">
-    <div>
-      <h2 id="player1-in-game-name"></h2>
-      <img id="player1-in-game-image" />
-    </div>
-    <div>
-      <h1>Total Score</h1>
-      <p id="player1-score"></p>
-      <p id="player2-score"></p>
-    </div>
-    <div>
-      <h2 id="player2-in-game-name"></h2>
-      <img id="player2-in-game-image" />
-    </div>
-  </header>
-  <main class="game-main">
-    <h3 id="in-game-winner"></h3>
-    <p class="winner-text">WINNER!</p>
-    <div class="board">
-    
-    </div>
-    <div class="game-button-wrapper">
-      <button id="new-round">New Round</button>
-      <button id="new-round">Finish Game</button>
-    </div>
-  </main>
+      <header class="game-header">
+        <div class="player1-side">
+          <h2 id="player1-in-game-name"></h2>
+          <img id="player1-in-game-image" />
+        </div>
+        <div>
+          <h1>Total Score</h1>
+          <div class="total-scores-wrapper">
+            <div>
+              <p id="player1-score-in-game-name"></p>
+              <p id="player1-score"></p>
+            </div>
+            <div>
+              <p id="player2-score-in-game-name"></p>
+              <p id="player2-score"></p>
+            </div>
+          </div>
+        </div>
+        <div class="player2-side">
+          <h2 id="player2-in-game-name"></h2>
+          <img id="player2-in-game-image" />
+        </div>
+      </header>
+      <main class="game-main">
+        <h3 id="in-game-winner"></h3>
+        <p class="winner-text">WINNER!</p>
+        <div class="board"></div>
+        <div class="game-button-wrapper">
+          <button id="new-round-button">New Round</button>
+          <button id="finish-game-button">Finish Game</button>
+        </div>
+      </main>
     </div>
     <script type="module" src="/main.js"></script>
   </body>

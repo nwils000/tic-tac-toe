@@ -31,7 +31,32 @@
 }
 
 #in-game-winner,
+#shuffling-names,
 .winner-text,
 .game-button-wrapper {
   display: none;
+}
+
+.game-header {
+  display: flex;
+  justify-content: space-between;
+
+  align-items: top;
+}
+
+.total-scores-wrapper {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+}
+
+.total-scores-wrapper div {
+  display: flex;
+  justify-content: center;
+}
+
+.player1-side,
+.player2-side {
+  width: 20%;
+  text-align: center;
 }
