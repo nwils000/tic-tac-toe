@@ -39,8 +39,7 @@ let player1ScoreNameDisplay = document.getElementById(
 let player2ScoreNameDisplay = document.getElementById(
   'player2-score-in-game-name'
 );
-let player1Score = document.getElementById('player1-score');
-let player2Score = document.getElementById('player2-score');
+
 let playerWhoOne = document.getElementById('player-who-won-name');
 let scoreVsScore = document.getElementById('score-vs-score');
 let finishedGame = document.getElementById('finished-game');
@@ -58,11 +57,9 @@ startGameButton.addEventListener('click', () => {
   player2.name = player2NameInput.value;
   player1NameDisplay.textContent = player1.name;
   player2NameDisplay.textContent = player2.name;
-  player1ScoreNameDisplay.textContent = player1.name;
-  player2ScoreNameDisplay.textContent = player2.name;
+  player1ScoreNameDisplay.textContent = `${player1.name}: ${player1.score}`;
+  player2ScoreNameDisplay.textContent = `${player2.name}: ${player2.score}`;
 
-  player1Score.textContent = player1.score;
-  player2Score.textContent = player2.score;
   if (player1.name !== '' && player2.name !== '') {
     shufflePlayers();
     player1.symbol === 'X'
@@ -91,7 +88,7 @@ newGameButton.addEventListener('click', () => {
 
 function newGame() {
   finishedGame.style.display = 'none';
-  mainWrapper.style.display = 'block';
+  mainWrapper.style.display = 'flex';
   newRound();
   player1.score = 0;
   player2.score = 0;
@@ -106,13 +103,16 @@ function finishGame() {
   let loser = player1.score < player2.score ? player1 : player2;
   if (winner.score === loser.score) {
     winOrDraw.textContent = 'You both lose!!!';
-    scoreVsScore.textContent = `Score was tied ${winner.score} and ${loser.score}`;
+    scoreVsScore.textContent = `Score was tied ${winner.score} to ${loser.score}`;
   } else if (winner.score !== loser.score) {
-    winOrDraw.textContent = `${winner.name} is the winner!!!`;
-    scoreVsScore.textContent = `you won ${winner.score} to ${loser.score}`;
+    winOrDraw.textContent = `${winner.name}, you won ${winner.score} to ${loser.score}!`;
   }
   gamePageWrapper.style.display = 'none';
-  finishedGame.style.display = 'block';
+  finishedGame.style.display = 'flex';
+  XPlayer1.style.display = 'none';
+  OPlayer1.style.display = 'none';
+  XPlayer2.style.display = 'none';
+  OPlayer2.style.display = 'none';
 }
 
 function shufflePlayers() {
@@ -128,15 +128,16 @@ function shufflePlayers() {
 function winnerDisplay(winner) {
   if (player1.symbol === winner) {
     player1.score++;
+    winnerText.textContent = `${player1.name} won this round!`;
   } else if (player2.symbol === winner) {
     player2.score++;
+    winnerText.textContent = `${player2.name} won this round!`;
   }
-  winnerText.textContent = 'WINNER!';
-
+  player1ScoreNameDisplay.textContent = `${player1.name}: ${player1.score}`;
+  player2ScoreNameDisplay.textContent = `${player2.name}: ${player2.score}`;
   winnerText.style.visibility = 'visible';
   gameButtonWrapper.style.visibility = 'visible';
-  player1Score.textContent = player1.score;
-  player2Score.textContent = player2.score;
+
   currentRoundOver = true;
 }
 
@@ -148,8 +149,6 @@ function catDisplay() {
     winnerText.style.visibility = 'visible';
     gameButtonWrapper.style.visibility = 'visible';
     winnerText.textContent = 'CAT!';
-    player1Score.textContent = player1.score;
-    player2Score.textContent = player2.score;
   }
 }
 

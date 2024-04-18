@@ -44,6 +44,14 @@ h2,
   justify-content: center;
   align-items: center;
 }
+.board div {
+  transition: background-color 0.2s, transform 0.1s;
+}
+
+.board div:hover {
+  background-color: #dc8cff;
+  transform: scale(1.02); /* Slightly enlarges the tile */
+}
 
 .game-main {
   display: flex;
@@ -73,6 +81,13 @@ h2,
   align-items: center;
   width: 7rem;
   text-align: center;
+  font-size: 1.2rem;
+  margin: 0;
+  font-weight: 600;
+}
+
+.total-scores-wrapper p {
+  margin: 0.4rem;
 }
 
 .player1-side,
@@ -89,6 +104,15 @@ h2,
 #player1-in-game-name,
 #player2-in-game-name {
   font-size: 2rem;
+}
+
+#finished-game {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 
 #game-page-wrapper,
@@ -139,7 +163,28 @@ input {
   border: 1px solid black;
 }
 
-#start-game-button {
+#new-round-button,
+#finish-game-button {
+  padding: 0.5rem 1.5rem;
+  font-size: 1rem;
+  border-radius: 20px;
+  background-image: linear-gradient(to right, #5eace0, #594bd8);
+  border: none;
+  color: rgb(255, 255, 255);
+  text-transform: uppercase;
+  transition: background-color 0.3s, transform 0.2s;
+  border: 2px solid #594bd8;
+}
+
+#new-round-button:hover,
+#finish-game-button:hover {
+  cursor: pointer;
+  background-image: linear-gradient(to right, #73d3ff, #ccfffc);
+  transform: scale(1.05);
+}
+
+#start-game-button,
+#new-game-button {
   padding: 1rem 3rem;
   font-size: 1.3rem;
   border-radius: 20px;
@@ -147,10 +192,15 @@ input {
   border: none;
   color: rgb(255, 255, 255);
   text-transform: uppercase;
+  transition: background-color 0.3s, transform 0.2s;
+  border: 2px solid #594bd8;
 }
 
-#start-game-button:hover {
+#start-game-button:hover,
+#new-game-button:hover {
   cursor: pointer;
+  background-image: linear-gradient(to right, #73d3ff, #ccfffc);
+  transform: scale(1.05);
 }
 
 #player-name-submission-error {
@@ -171,27 +221,17 @@ input {
   box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+.board div:hover {
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.438);
+  scale: 1.02;
+}
+
 .board {
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.404);
   border-radius: 8px;
   margin: 20px;
-  font-size: 4rem;
+  font-size: 3rem;
   cursor: pointer;
-}
-
-#start-game-button,
-#start-game-button:hover {
-  transition: background-color 0.3s, transform 0.2s;
-}
-
-#start-game-button:hover {
-  background-image: linear-gradient(to right, #73d3ff, #ccfffc);
-  transform: scale(1.05);
-}
-
-input,
-#start-game-button {
-  border: 2px solid #594bd8;
 }
 
 input:focus,
@@ -203,6 +243,17 @@ input:focus,
 .shuffling-names-wrapper {
   background-color: rgba(0, 0, 0, 0.5);
   color: #ffffff;
+}
+
+.winner-text {
+  color: #594bd8;
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin: 0;
+}
+
+#score-vs-score {
+  text-align: center;
 }
 
 @media (max-width: 600px) {
