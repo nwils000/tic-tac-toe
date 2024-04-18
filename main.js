@@ -26,11 +26,11 @@ let gamePageWrapper = document.getElementById('game-page-wrapper');
 let mainWrapper = document.getElementById('main-wrapper');
 let board = document.querySelector('.board');
 let winnerText = document.querySelector('.winner-text');
-let inGameWinner = document.querySelector('#in-game-winner');
+
 let gameButtonWrapper = document.querySelector('.game-button-wrapper');
 let newRoundButton = document.getElementById('new-round-button');
 let finishGameButton = document.getElementById('finish-game-button');
-let shufflingNames = document.getElementById('shuffling-names');
+let shufflingNamesWrapper = document.querySelector('.shuffling-names-wrapper');
 let player1NameDisplay = document.getElementById('player1-in-game-name');
 let player2NameDisplay = document.getElementById('player2-in-game-name');
 let player1ScoreNameDisplay = document.getElementById(
@@ -73,7 +73,7 @@ startGameButton.addEventListener('click', () => {
       : (OPlayer2.style.display = 'block');
     console.log('User Objects', player1, player2);
     mainWrapper.style.display = 'none';
-    shufflingNames.style.display = 'block';
+    shufflingNamesWrapper.style.display = 'flex';
     setTimeout(showGame, 1000);
   } else {
     playerNameSubmissionError.textContent = 'Please submit 2 names.';
@@ -81,7 +81,7 @@ startGameButton.addEventListener('click', () => {
 });
 
 function showGame() {
-  shufflingNames.style.display = 'none';
+  shufflingNamesWrapper.style.display = 'none';
   gamePageWrapper.style.display = 'block';
 }
 
@@ -132,7 +132,7 @@ function winnerDisplay(winner) {
     player2.score++;
   }
   winnerText.textContent = 'WINNER!';
-  inGameWinner.style.visibility = 'visible';
+
   winnerText.style.visibility = 'visible';
   gameButtonWrapper.style.visibility = 'visible';
   player1Score.textContent = player1.score;
@@ -144,7 +144,7 @@ function catDisplay() {
   if (currentRoundOver) return;
   if (winningConditions(gameBoard) !== 'won') {
     currentRoundOver = true;
-    inGameWinner.style.visibility = 'visible';
+
     winnerText.style.visibility = 'visible';
     gameButtonWrapper.style.visibility = 'visible';
     winnerText.textContent = 'CAT!';
@@ -224,7 +224,7 @@ function newRound() {
   winnerText.textContent = 'WINNER!';
   gameBoard = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '];
   currentRoundOver = false;
-  inGameWinner.style.visibility = 'hidden';
+
   winnerText.style.visibility = 'hidden';
   gameButtonWrapper.style.visibility = 'hidden';
 }

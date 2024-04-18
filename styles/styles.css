@@ -1,3 +1,29 @@
+html,
+body {
+  font-family: 'Jacquard 24', Arial, Helvetica, sans-serif;
+  background: radial-gradient(circle at top, #73d3ff, #ccfffc);
+  font-weight: 400;
+  font-style: normal;
+  height: 100vh;
+  margin: 0;
+}
+h1 {
+  text-align: center;
+}
+
+h1,
+h2 {
+  margin-top: 0;
+
+  color: #594bd8;
+}
+
+p,
+h2,
+.board {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
 .board {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -12,7 +38,7 @@
 .board div {
   height: 5rem;
   width: 5rem;
-  background-color: bisque;
+  background-color: rgb(253, 200, 255);
   border: 1px solid black;
   display: flex;
   justify-content: center;
@@ -22,8 +48,8 @@
 .game-main {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
+  justify-content: end;
 }
 
 .game-header {
@@ -31,6 +57,7 @@
   justify-content: space-between;
   padding: 1rem 10vw;
   align-items: top;
+  padding-top: 3rem;
 }
 
 .total-scores-wrapper {
@@ -42,6 +69,10 @@
 .total-scores-wrapper div {
   display: flex;
   justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  width: 7rem;
+  text-align: center;
 }
 
 .player1-side,
@@ -51,6 +82,13 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  padding-top: 9px;
+  align-self: start;
+}
+
+#player1-in-game-name,
+#player2-in-game-name {
+  font-size: 2rem;
 }
 
 #game-page-wrapper,
@@ -58,9 +96,14 @@
 #draggableO-player1,
 #draggableX-player2,
 #draggableO-player2,
-#shuffling-names,
+.shuffling-names-wrapper,
 #finished-game {
   display: none;
+}
+
+#game-page-wrapper h1 {
+  font-size: 3.5rem;
+  margin-bottom: 1rem;
 }
 
 #in-game-winner,
@@ -85,4 +128,91 @@
   justify-content: center;
 }
 
-#finishedGames
+#main-wrapper h1 {
+  font-size: 6rem;
+  margin-bottom: 2rem;
+}
+
+input {
+  padding: 0.2rem 1rem 0.2rem 0.4rem;
+  font-size: 1.3rem;
+  border: 1px solid black;
+}
+
+#start-game-button {
+  padding: 1rem 3rem;
+  font-size: 1.3rem;
+  border-radius: 20px;
+  background-image: linear-gradient(to right, #5eace0, #594bd8);
+  border: none;
+  color: rgb(255, 255, 255);
+  text-transform: uppercase;
+}
+
+#start-game-button:hover {
+  cursor: pointer;
+}
+
+#player-name-submission-error {
+  color: rgb(255, 0, 0);
+}
+
+.shuffling-names-wrapper {
+  width: 100vw;
+  height: 100vh;
+  font-size: 6rem;
+  justify-content: center;
+  align-items: center;
+}
+
+.board div {
+  border-radius: 5px;
+  background-color: #f8d7ff;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.board {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  margin: 20px;
+  font-size: 4rem;
+  cursor: pointer;
+}
+
+#start-game-button,
+#start-game-button:hover {
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+#start-game-button:hover {
+  background-image: linear-gradient(to right, #73d3ff, #ccfffc);
+  transform: scale(1.05);
+}
+
+input,
+#start-game-button {
+  border: 2px solid #594bd8;
+}
+
+input:focus,
+#start-game-button:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px #5eace0;
+}
+
+.shuffling-names-wrapper {
+  background-color: rgba(0, 0, 0, 0.5);
+  color: #ffffff;
+}
+
+@media (max-width: 600px) {
+  .board div {
+    height: 3rem;
+    width: 3rem;
+  }
+
+  #main-wrapper,
+  .game-main {
+    padding: 1rem;
+  }
+}

@@ -6,6 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Tic-Tac-Toe</title>
     <link rel="stylesheet" href="./styles/styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Borel&family=Jacquard+24&family=Luxurious+Script&family=Patrick+Hand&family=Quattrocento+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   </head>
   <body>
     <div id="main-wrapper">
@@ -15,20 +21,21 @@
           type="text"
           maxlength="10"
           id="player1-name-input"
-          placeholder="Player1"
+          placeholder="Player 1"
         />
         <input
           type="text"
           maxlength="10"
           id="player2-name-input"
-          placeholder="Player2"
+          placeholder="Player 2"
         />
       </div>
       <p id="player-name-submission-error"></p>
       <button id="start-game-button">Start Game!</button>
     </div>
-
-    <div id="shuffling-names">Shuffling names...</div>
+    <div class="shuffling-names-wrapper">
+      <div id="shuffling-names">Shuffling names...</div>
+    </div>
 
     <div id="finished-game">
       <h2 id="win-or-draw"></h2>
@@ -43,8 +50,8 @@
           <h2 id="player1-in-game-name"></h2>
           <svg
             id="draggableX-player1"
-            width="100"
-            height="100"
+            width="120"
+            height="120"
             viewBox="0 0 24 24"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
@@ -92,8 +99,8 @@
           <h2 id="player2-in-game-name"></h2>
           <svg
             id="draggableX-player2"
-            width="100"
-            height="100"
+            width="120"
+            height="120"
             viewBox="0 0 24 24"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
@@ -126,7 +133,6 @@
         </div>
       </header>
       <main class="game-main">
-        <h3 id="in-game-winner"></h3>
         <p class="winner-text">WINNER!</p>
         <div class="board"></div>
         <div class="game-button-wrapper">
