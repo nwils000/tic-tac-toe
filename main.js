@@ -105,6 +105,7 @@ function newGame() {
   player2.score = 0;
   finishedGame.style.display = 'none';
   mainWrapper.style.display = 'flex';
+  playerNameSubmissionError.textContent = '';
   newRound();
 }
 
@@ -162,7 +163,6 @@ function createBoardCell(index) {
       cell.appendChild(draggedItem.cloneNode(true));
       gameBoard[index] = draggedItem.id.includes('X') ? 'X' : 'O';
       checkGameStatus();
-      R;
     }
   });
   board.appendChild(cell);
