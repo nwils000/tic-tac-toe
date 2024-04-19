@@ -1,3 +1,4 @@
+// Player Objects
 let player1 = {
   name: '',
   symbol: '',
@@ -10,12 +11,13 @@ let player2 = {
   score: 0,
 };
 
+// Game State
 let currentPlayer = player1;
-
 let gameBoard = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '];
-
 let clickCount = 1;
+let currentRoundOver = false;
 
+// All elements
 let player1NameInput = document.getElementById('player1-name-input');
 let player2NameInput = document.getElementById('player2-name-input');
 let startGameButton = document.getElementById('start-game-button');
@@ -24,13 +26,16 @@ let playerNameSubmissionError = document.getElementById(
 );
 let gamePageWrapper = document.getElementById('game-page-wrapper');
 let mainWrapper = document.getElementById('main-wrapper');
+let shufflingNamesWrapper = document.querySelector('.shuffling-names-wrapper');
 let board = document.querySelector('.board');
 let winnerText = document.querySelector('.winner-text');
-
 let gameButtonWrapper = document.querySelector('.game-button-wrapper');
 let newRoundButton = document.getElementById('new-round-button');
 let finishGameButton = document.getElementById('finish-game-button');
-let shufflingNamesWrapper = document.querySelector('.shuffling-names-wrapper');
+let newGameButton = document.getElementById('new-game-button');
+let winOrDraw = document.getElementById('win-or-draw');
+
+// Display elements for players and scores
 let player1NameDisplay = document.getElementById('player1-in-game-name');
 let player2NameDisplay = document.getElementById('player2-in-game-name');
 let player1ScoreNameDisplay = document.getElementById(
@@ -39,72 +44,80 @@ let player1ScoreNameDisplay = document.getElementById(
 let player2ScoreNameDisplay = document.getElementById(
   'player2-score-in-game-name'
 );
-
-let playerWhoOne = document.getElementById('player-who-won-name');
-let scoreVsScore = document.getElementById('score-vs-score');
 let finishedGame = document.getElementById('finished-game');
-let newGameButton = document.getElementById('new-game-button');
-let winOrDraw = document.getElementById('win-or-draw');
+let scoreVsScore = document.getElementById('score-vs-score');
+
+// Draggables
 let XPlayer1 = document.getElementById('draggableX-player1');
 let OPlayer1 = document.getElementById('draggableO-player1');
 let XPlayer2 = document.getElementById('draggableX-player2');
 let OPlayer2 = document.getElementById('draggableO-player2');
 
-let currentRoundOver = false;
-
+// Event listener for start of game
 startGameButton.addEventListener('click', () => {
-  player1.name = player1NameInput.value;
-  player2.name = player2NameInput.value;
-  player1NameDisplay.textContent = player1.name;
-  player2NameDisplay.textContent = player2.name;
-  player1ScoreNameDisplay.textContent = `${player1.name}: ${player1.score}`;
-  player2ScoreNameDisplay.textContent = `${player2.name}: ${player2.score}`;
+  // Validate input names
+  if (player1NameInput.value !== '' && player2NameInput.value !== '') {
+    player1.name = player1NameInput.value;
+    player2.name = player2NameInput.value;
+    player1NameDisplay.textContent = player1.name;
+    player2NameDisplay.textContent = player2.name;
+    player1ScoreNameDisplay.textContent = `${player1.name}: ${player1.score}`;
+    player2ScoreNameDisplay.textContent = `${player2.name}: ${player2.score}`;
 
-  if (player1.name !== '' && player2.name !== '') {
+    // Randomize player order and assign symbols
     shufflePlayers();
-    player1.symbol === 'X'
-      ? (XPlayer1.style.display = 'block')
-      : (OPlayer1.style.display = 'block');
-    player2.symbol === 'X'
-      ? (XPlayer2.style.display = 'block')
-      : (OPlayer2.style.display = 'block');
-    console.log('User Objects', player1, player2);
+    XPlayer1.style.display = player1.symbol === 'X' ? 'flex' : 'none';
+    OPlayer1.style.display = player1.symbol === 'O' ? 'flex' : 'none';
+    XPlayer2.style.display = player2.symbol === 'X' ? 'flex' : 'none';
+    OPlayer2.style.display = player2.symbol === 'O' ? 'flex' : 'none';
+
+    // Hide main menu and show game
     mainWrapper.style.display = 'none';
     shufflingNamesWrapper.style.display = 'flex';
-    setTimeout(showGame, 1000);
+    setTimeout(showGame, 1000); // Delay to show shuffled names
   } else {
     playerNameSubmissionError.textContent = 'Please submit 2 names.';
   }
 });
+
+function shufflePlayers() {
+  // Randomize who starts as 'X' or 'O'
+  if (Math.random() < 0.5) {
+    player1.symbol = 'X';
+    player2.symbol = 'O';
+  } else {
+    player1.symbol = 'O';
+    player2.symbol = 'X';
+  }
+}
 
 function showGame() {
   shufflingNamesWrapper.style.display = 'none';
   gamePageWrapper.style.display = 'block';
 }
 
-newGameButton.addEventListener('click', () => {
-  newGame();
-});
+// Functionality for new game and rounds
+newGameButton.addEventListener('click', newGame);
 
 function newGame() {
+  // Reset scores and display initial screen
+  player1.score = 0;
+  player2.score = 0;
   finishedGame.style.display = 'none';
   mainWrapper.style.display = 'flex';
   newRound();
-  player1.score = 0;
-  player2.score = 0;
 }
 
-finishGameButton.addEventListener('click', () => {
-  finishGame();
-});
+finishGameButton.addEventListener('click', finishGame);
 
 function finishGame() {
+  // Determine winner and display results
   let winner = player1.score > player2.score ? player1 : player2;
   let loser = player1.score < player2.score ? player1 : player2;
   if (winner.score === loser.score) {
     winOrDraw.textContent = 'You both lose!!!';
     scoreVsScore.textContent = `Score was tied ${winner.score} to ${loser.score}`;
-  } else if (winner.score !== loser.score) {
+  } else {
     winOrDraw.textContent = `${winner.name}, you won ${winner.score} to ${loser.score}!`;
   }
   gamePageWrapper.style.display = 'none';
@@ -115,40 +128,61 @@ function finishGame() {
   OPlayer2.style.display = 'none';
 }
 
-function shufflePlayers() {
-  if (Math.random() < 0.5) {
-    player1.symbol = 'X';
-    player2.symbol = 'O';
-  } else {
-    player1.symbol = 'O';
-    player2.symbol = 'X';
+newRoundButton.addEventListener('click', newRound);
+
+function newRound() {
+  // Reset game board for a new round
+  gameBoard = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '];
+  currentRoundOver = false;
+  clickCount = 1;
+  for (let i = 0; i < 9; i++) {
+    let element = document.getElementById(`cell-${i}`);
+    element.innerHTML = ''; // Clear the cell content
   }
+  winnerText.style.visibility = 'hidden';
+  gameButtonWrapper.style.visibility = 'hidden';
 }
 
-function winnerDisplay(winner) {
-  if (player1.symbol === winner) {
-    player1.score++;
-    winnerText.textContent = `${player1.name} won this round!`;
-  } else if (player2.symbol === winner) {
-    player2.score++;
-    winnerText.textContent = `${player2.name} won this round!`;
-  }
-  player1ScoreNameDisplay.textContent = `${player1.name}: ${player1.score}`;
-  player2ScoreNameDisplay.textContent = `${player2.name}: ${player2.score}`;
-  winnerText.style.visibility = 'visible';
-  gameButtonWrapper.style.visibility = 'visible';
-
-  currentRoundOver = true;
+// Setup board and gameplay logic
+for (let i = 0; i < 9; i++) {
+  createBoardCell(i);
 }
 
-function catDisplay() {
-  if (currentRoundOver) return;
-  if (winningConditions(gameBoard) !== 'won') {
-    currentRoundOver = true;
+function createBoardCell(index) {
+  // Create individual cells for the game board
+  let cell = document.createElement('div');
+  cell.classList.add('cell');
+  cell.setAttribute('id', `cell-${index}`);
+  cell.addEventListener('dragover', (e) => {
+    e.preventDefault(); // Allow drop
+  });
+  cell.addEventListener('drop', (e) => {
+    e.preventDefault();
+    if (!cell.textContent.includes(' ') && !currentRoundOver) {
+      cell.appendChild(draggedItem.cloneNode(true));
+      gameBoard[index] = draggedItem.id.includes('X') ? 'X' : 'O';
+      checkGameStatus();
+      R;
+    }
+  });
+  board.appendChild(cell);
+}
 
-    winnerText.style.visibility = 'visible';
-    gameButtonWrapper.style.visibility = 'visible';
-    winnerText.textContent = 'CAT!';
+// Drag and drop functionality
+let draggedItem = null;
+let draggableElements = document.querySelectorAll('[draggable="true"]');
+
+draggableElements.forEach((element) => {
+  element.addEventListener('dragstart', (e) => {
+    draggedItem = e.target;
+    console.log('drag-start', draggedItem.id);
+  });
+});
+
+function checkGameStatus() {
+  winningConditions(gameBoard);
+  if (!gameBoard.includes(' ')) {
+    catDisplay();
   }
 }
 
@@ -182,50 +216,28 @@ function winningConditions(board) {
   }
 }
 
-function createBoardCell(id, gameBoardLocation) {
-  let element = document.createElement('div');
-  element.setAttribute('id', id);
-  element.addEventListener('click', () => {
-    if (currentRoundOver) return;
+function winnerDisplay(winner) {
+  // Display winner and update scores
+  let scoringPlayer = winner === player1.symbol ? player1 : player2;
+  scoringPlayer.score++;
+  winnerText.textContent = `${scoringPlayer.name} won this round!`;
+  player1ScoreNameDisplay.textContent = `${player1.name}: ${player1.score}`;
+  player2ScoreNameDisplay.textContent = `${player2.name}: ${player2.score}`;
+  winnerText.style.visibility = 'visible';
+  gameButtonWrapper.style.visibility = 'visible';
 
-    if (clickCount % 2 === 0 && element.textContent === '') {
-      element.textContent = 'O';
-      gameBoard[gameBoardLocation] = 'O';
-      clickCount++;
-      winningConditions(gameBoard);
-    } else if (clickCount % 2 !== 0 && element.textContent === '') {
-      element.textContent = 'X';
-      gameBoard[gameBoardLocation] = 'X';
-      clickCount++;
-      winningConditions(gameBoard);
-    }
-    if (!gameBoard.includes(' ')) {
-      catDisplay();
-    }
-  });
-  board.appendChild(element);
+  currentRoundOver = true;
 }
 
-for (let i = 0; i < 9; i++) {
-  createBoardCell(`cell ${i}`, i);
-}
-
-newRoundButton.addEventListener('click', () => {
-  newRound();
-});
-
-function newRound() {
-  clickCount = 1;
-  for (let i = 0; i < 9; i++) {
-    let element = document.getElementById(`cell ${i}`);
-    element.textContent = '';
+function catDisplay() {
+  // Display a draw condition
+  if (currentRoundOver) return;
+  if (winningConditions(gameBoard) !== 'won') {
+    currentRoundOver = true;
+    winnerText.textContent = 'CAT!';
+    winnerText.style.visibility = 'visible';
+    gameButtonWrapper.style.visibility = 'visible';
   }
-  winnerText.textContent = 'WINNER!';
-  gameBoard = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '];
-  currentRoundOver = false;
-
-  winnerText.style.visibility = 'hidden';
-  gameButtonWrapper.style.visibility = 'hidden';
 }
 
 // BUGS
