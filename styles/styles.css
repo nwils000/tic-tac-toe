@@ -1,12 +1,13 @@
 html,
 body {
-  font-family: 'Jacquard 24', Arial, Helvetica, sans-serif;
+  font-family: Arial, Helvetica, sans-serif;
   background: radial-gradient(circle at top, #73d3ff, #ccfffc);
   font-weight: 400;
   font-style: normal;
   height: 100vh;
   margin: 0;
 }
+
 h1 {
   text-align: center;
 }
@@ -14,7 +15,6 @@ h1 {
 h1,
 h2 {
   margin-top: 0;
-
   color: #594bd8;
 }
 
@@ -56,7 +56,7 @@ h2,
 
 .board div:hover {
   background-color: rgba(107, 96, 209, 0.26);
-  transform: scale(1.02); /* Slightly enlarges the tile */
+  transform: scale(1.02);
   box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.438);
   scale: 1.02;
 }
@@ -66,6 +66,7 @@ h2,
   flex-direction: column;
   align-items: center;
   justify-content: end;
+  padding-top: 1.5rem;
 }
 
 .game-header {
@@ -235,17 +236,19 @@ input {
   font-size: 6rem;
   justify-content: center;
   align-items: center;
+  background-color: rgba(0, 0, 0, 0.203);
+  color: #ffffff;
+}
+
+#shuffling-names {
+  position: relative;
+  bottom: 2rem;
 }
 
 input:focus,
 #start-game-button:focus {
   outline: none;
   box-shadow: 0 0 0 2px #5eace0;
-}
-
-.shuffling-names-wrapper {
-  background-color: rgba(0, 0, 0, 0.5);
-  color: #ffffff;
 }
 
 .winner-text {
@@ -259,14 +262,98 @@ input:focus,
   text-align: center;
 }
 
+.draggableX {
+  width: 60px;
+  height: 60px;
+}
+
+.draggableO {
+  width: 50px;
+  height: 50px;
+}
+
+@media (max-width: 955px) {
+  #game-page-wrapper {
+    padding-top: 2rem;
+  }
+
+  .game-main {
+    padding-top: 2rem;
+  }
+
+  #game-page-wrapper h1 {
+    font-size: 1.8rem;
+    margin-bottom: 0.5rem;
+  }
+  .winner-text {
+    font-size: 1.5rem;
+  }
+  .shuffling-names-wrapper {
+    font-size: 2rem;
+  }
+
+  #new-round-button,
+  #finish-game-button {
+    padding: 0.25rem 0.75rem;
+    font-size: 0.8rem;
+  }
+
+  input {
+    padding: 0.2rem 1rem 0.2rem 0.4rem;
+    font-size: 1.3rem;
+    border: 1px solid black;
+  }
+
+  #main-wrapper h1 {
+    font-size: 4rem;
+    margin-bottom: 2rem;
+  }
+
+  #player1-in-game-name,
+  #player2-in-game-name {
+    font-size: 1rem;
+  }
+
+  .total-scores-wrapper div {
+    width: 7rem;
+    font-size: 0.9rem;
+  }
+
+  .board {
+    margin: 20px;
+  }
+
+  .winner-text {
+    font-size: 1.3rem;
+  }
+}
+
 @media (max-width: 600px) {
+  #game-page-wrapper h1 {
+    font-size: 1.6rem;
+    margin-bottom: 0rem;
+  }
+  .total-scores-wrapper div {
+    width: 6rem;
+    font-size: 0.9rem;
+  }
   .board div {
-    height: 3rem;
-    width: 3rem;
+    height: 5rem;
+    width: 5rem;
   }
 
   #main-wrapper,
   .game-main {
     padding: 1rem;
+  }
+
+  .draggableX {
+    width: 45px;
+    height: 45px;
+  }
+
+  .draggableO {
+    width: 40px;
+    height: 40px;
   }
 }

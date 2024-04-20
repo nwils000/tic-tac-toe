@@ -158,10 +158,14 @@ function createBoardCell(index) {
     e.preventDefault(); // Allow drop
   });
   cell.addEventListener('drop', (e) => {
+    // console.log(cell);
+    console.log(cell.textContent);
     e.preventDefault();
     if (!cell.textContent.includes(' ') && !currentRoundOver) {
       cell.appendChild(draggedItem.cloneNode(true));
       gameBoard[index] = draggedItem.id.includes('X') ? 'X' : 'O';
+
+      console.log(cell.textContent);
       checkGameStatus();
     }
   });
