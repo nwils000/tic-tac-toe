@@ -304,8 +304,13 @@ input:focus,
     border: 1px solid black;
   }
 
+  #main-wrapper {
+    width: fit-content;
+    margin: auto;
+  }
+
   #main-wrapper h1 {
-    font-size: 4rem;
+    font-size: 3rem;
     margin-bottom: 2rem;
   }
 
@@ -340,11 +345,6 @@ input:focus,
   .board div {
     height: 5rem;
     width: 5rem;
-  }
-
-  #main-wrapper,
-  .game-main {
-    padding: 1rem;
   }
 
   .draggableX {
